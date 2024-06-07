@@ -1,11 +1,21 @@
 import Image from "next/image";
+import { use } from "react";
 
-const FCategories = async () => {
-  const res = await fetch("http://localhost:3000/api/books");
-  const data = await res.json();
-  const fiction1 = data.data[3];
-  const fiction2 = data.data[1];
-  const fiction3 = data.data[2];
+async function fetchBooks() {
+  const res = await fetch("http://localhost:3000/api/books", {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch books");
+  }
+  return res.json();
+}
+
+const FCategories = () => {
+  const { data: fictionBooks  } = use(fetchBooks());
+  const fiction1 = fictionBooks[0];
+  const fiction2 = fictionBooks[1];
+  const fiction3 = fictionBooks[2];
   return (
     <div className="w-full max-w-[1250px] mx-auto mt-5 py-5">
       <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 place-content-center">

@@ -3,7 +3,9 @@ import BookCard from "./BookCard";
 import { TBook } from "@/types/Book";
 
 const FeaturedBooks = async () => {
-  const res = await fetch("http://localhost:3000/api/books");
+  const res = await fetch("http://localhost:3000/api/books", {
+    cache: "no-cache",
+  });
   const data = await res.json();
   return (
     <div className="w-full max-w-[1250px] mx-auto mt-10 py-5">
